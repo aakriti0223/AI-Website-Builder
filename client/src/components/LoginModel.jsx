@@ -1,3 +1,4 @@
+import { serverUrl } from '../App'
 import React from 'react'
 import { AnimatePresence, motion } from "motion/react"
 import { signInWithPopup } from 'firebase/auth'
@@ -6,7 +7,7 @@ import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { setUserData } from '../redux/userSlice'
 
-const serverUrl = "http://localhost:8000"
+
 
 function LoginModel({ open, onClose }) {
 const dispatch=useDispatch()
