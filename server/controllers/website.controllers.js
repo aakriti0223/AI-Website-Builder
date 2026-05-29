@@ -252,6 +252,15 @@ ABSOLUTE RULES
 - FORMAT MUST MATCH EXACTLY
 `;
 
+const safeExtractJson = async (raw) => {
+    try {
+        return await extractJson(raw);
+    } catch (error) {
+        console.log("JSON parse error:", error.message);
+        return null;
+    }
+};
+
 export const generateWebsite = async (req, res) => {
     try {
         const { prompt } = req.body;
@@ -279,11 +288,11 @@ export const generateWebsite = async (req, res) => {
 
         for (let i = 0; i < 2 && !parsed; i++) {
             raw = await generateResponse(finalPrompt);
-            parsed = await extractJson(raw);
+            parsed = await safeExtractJson(raw);
 
             if (!parsed) {
                 raw = await generateResponse(finalPrompt + "\n\nRETURN ONLY RAW JSON.");
-                parsed = await extractJson(raw);
+                parsed = await safeExtractJson(raw);
             }
         }
 
@@ -373,6 +382,8 @@ export const changes = async (req, res) => {
             });
         }
 
+        const currentCode = website.latestCode || website.code || "";
+
         const updatePrompt = `
 YOU ARE UPDATING AN EXISTING COMPLETE HTML WEBSITE.
 
@@ -410,7 +421,7 @@ FUNCTIONALITY RULES:
 - All dynamic rendering must still work after update
 
 CURRENT WEBSITE CODE:
-${website.latestCode}
+${currentCode}
 
 USER REQUEST:
 ${prompt}
@@ -427,11 +438,11 @@ RETURN RAW JSON ONLY:
 
         for (let i = 0; i < 2 && !parsed; i++) {
             raw = await generateResponse(updatePrompt);
-            parsed = await extractJson(raw);
+            parsed = await safeExtractJson(raw);
 
             if (!parsed) {
                 raw = await generateResponse(updatePrompt + "\n\nRETURN ONLY RAW JSON.");
-                parsed = await extractJson(raw);
+                parsed = await safeExtractJson(raw);
             }
         }
 
@@ -461,6 +472,7 @@ RETURN RAW JSON ONLY:
         return res.status(200).json({
             message: parsed.message || "Website updated",
             code: parsed.code,
+            latestCode: parsed.code,
             remainingCredits: user.credits
         });
 
