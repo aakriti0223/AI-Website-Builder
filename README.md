@@ -119,13 +119,3 @@ The main goal of this project is to make website creation faster, easier, and mo
 * 📄 Add multi-page website generation
 * 🧠 Improve AI prompt customization
 * 📊 Add analytics for deployed websites
-
-## 👩‍💻 Author
-
-**Aakriti**
-
-GitHub: [aakriti0223](https://github.com/aakriti0223)
-
-## 📌 Conclusion
-
-AI Website Builder is a practical full-stack MERN project that combines Artificial Intelligence with modern web development. It helps users generate, preview, edit, and deploy websites easily through a simple prompt-based system. This project is useful for learning real-world concepts like MERN stack development, AI integration, authentication, payments, protected routes, database handling, and full-stack deployment.
