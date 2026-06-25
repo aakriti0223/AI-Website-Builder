@@ -37,7 +37,7 @@
 // export default generateResponse
 
 const openRouterUrl = "https://openrouter.ai/api/v1/chat/completions"
-const model = "deepseek/deepseek-r1-0528:free"
+const model = "meta-llama/llama-3.1-8b-instruct:free"
 
 const generateResponse = async (prompt) => {
     const res = await fetch(openRouterUrl, {
